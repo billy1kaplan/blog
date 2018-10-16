@@ -30,7 +30,7 @@ class Bio extends React.Component {
           Coopted by <strong>Billy</strong> who lives and works from
           a rented Hyundai Sonata building less than useful things.{' '}
           <a href="https://github.com/billy1kaplan">
-	  	Check my github!
+    	  	Checkout my github!
           </a>
         </p>
       </div>

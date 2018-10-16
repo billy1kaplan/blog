@@ -3,6 +3,8 @@ import { Link } from 'gatsby'
 
 import { rhythm, scale } from '../utils/typography'
 
+import './Container.css'
+
 class Template extends React.Component {
   render() {
     const { location, children } = this.props
@@ -11,24 +13,11 @@ class Template extends React.Component {
 
     if (location.pathname === rootPath) {
       header = (
-        <h1
-          style={{
-            ...scale(1.5),
-            marginBottom: rhythm(1.5),
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: 'none',
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
-            to={'/'}
-          >
-	  Home
-          </Link>
-        </h1>
+        <div className="Header">
+          {this.headerlink('About', '/')}
+          {this.headerlink('Programming', '/')}
+          {this.headerlink('Books', '/')}
+        </div>
       )
     } else {
       header = (
@@ -47,7 +36,7 @@ class Template extends React.Component {
             }}
             to={'/'}
           >
-	  Home
+    	  Home
           </Link>
         </h3>
       )
@@ -65,6 +54,22 @@ class Template extends React.Component {
         {children}
       </div>
     )
+  }
+
+  headerlink(text, location) {
+        return (<h3>
+          <Link
+            style={{
+              boxShadow: 'none',
+              textDecoration: 'none',
+              color: 'inherit',
+              marginRight: '15px',
+            }}
+            to={location}
+          >
+          {text}
+          </Link>
+        </h3>)
   }
 }
 

@@ -1,0 +1,20 @@
+---
+title: "Docker Debugging"
+description: "Docker Debugging Detective"
+pubDate: "Aug 13 2020"
+heroImage: "../../assets/docker.jpg"
+---
+
+Seemingly magic constants exist in surprising places in software. I remember discussing magic constants at the Recurse Center, giving the example of the [22 parameter limit on scala functions](https://stackoverflow.com/questions/4152223/why-are-scala-functions-limited-to-22-parameters). I recently discovered another magic constant.
+
+After logging some large JSON in a docker container to Google Cloud, we noticed our JSON parser failed on some rows of the log output. After looking at a few different messages, we observed that all the messages cut off before the closing "}" brace. No wonder the JSON parser was failing! These truncated messages were chopped off at exactly 16,387 characters. This number was close to 16,384 or 2^14, and we realized that we were counting two extra quotes and a new line added to the message. Oops! Based on this observation, we first hypothesized that our logging agent, Google Cloud logging, cuts off log entries at 16,384 bytes.
+
+This was quickly disproven by Google Cloud Logging documentation which states: the maximum size of a log entry is 256KB. Since we were far below that limit, we began to suspect that something was happening in Docker. We produced a counterexample to weaken our first hypothesis: the JSON-file Docker logging driver also truncates lines. This observation leads to our second hypothesis that Docker truncates logs sent to the logs at 16,384 bytes.
+
+Googling "Docker 16,384 logging limit" didn't lead to anything fruitful. We tried grepping the Docker codebase on Github, for 16,384 and 2^14 to no avail. Finally, we Googled "Docker 16k log limit" and found something [relevant!](https://github.com/kubernetes/kubernetes/issues/52444). Clicking around the threads leads us to the PR that introduced the [log limit](https://github.com/moby/moby/pull/22982). In that thread, we find: "The larger message sizes are unlikely, so I tweaked the maximum size down to 16k to get better results for smaller sizes."
+
+Reading the PR and related issues, we realized our second hypothesis was wrong. Docker does not truncate logs but buffers them and writes them in 16,384-byte chunks. In hindsight, we failed to make this observation because we found logs in Google Cloud based on a string within the JSON that occurred at the beginning of the message, so we would only match log lines containing the first truncated chunk. We also missed this chunking in the JSON-file logs which was a case of [selective attention](https://www.youtube.com/watch?v=vJG698U2Mvo). Our initial Googling and code grepping failed because the constant was defined as `16 * 1024` and not any of the variants we tried.
+
+In both the case of the Scala 22 parameter function limit and Docker log chunking, we hit an instance of the "Law of Leaky Abstractions": [All non-trivial abstractions, to some degree, are leaky.](https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions). Leaks add to cognitive overhead. A function can have any number of parameters, but you have to remember to keep your functions at or below 22 parameters in Scala (this restriction was removed in more modern versions of Scala). As an abstraction, Docker logging appears to let you log things from a docker container to a destination of your choosing. In reality, you have to keep the complexity of 16,384-byte chunks in mind. In this case, the leak was neither obvious nor easy to pinpoint. My mental model of logging was a little bit different from the more complicated reality.
+
+This magic constant is also a nice illustration of [Hyrum's Law](https://www.hyrumslaw.com). I don't see this 16,384-byte chunking mentioned anywhere in the documentation but it is now part of the interface!

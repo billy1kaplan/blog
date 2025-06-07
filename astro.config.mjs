@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: "billykaplan.io",
+	site: "https://billykaplan.io",
 	base: "blog",
 	integrations: [mdx(), sitemap()],
 });

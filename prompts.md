@@ -1,0 +1,28 @@
+Taken from [How to Actually Start Writing](https://quarter--mile.com/How-To-Actually-Start-Writing):
+
+- [ ] What did you change your mind about last year?
+- [ ] What is the most surprising thing you learned about recently?
+- [ ] What is your most unpopular opinion?
+- [ ] What is important to you?
+- [ ] Who was your favorite high school teacher?
+- [ ] What is your best movie pitch?
+- [ ] What did you learn last year?
+- [ ] What are you good at?
+- [ ] What are you bad at?
+- [ ] What will the world look like in 20 years? 100? 1,000?
+- [ ] What is your favorite place on earth?
+- [ ] How do you learn new things?
+- [ ] What is the most wrong you have ever been at work?
+- [ ] Write a memo justifying your current life. Why are you living the way you are?
+- [ ] If someone gave you a one-way ticket 1000 years into the future, would you take it?
+- [ ] What commonly accepted practices today do you think will be viewed as horrific in 500 years?
+- [ ] What piece(s) of art consistently make you cry? If none, why do you think that is?
+- [ ] Where were your great-great-great grandparents born, and what lives do you think they lived?
+- [ ] If you could add any activity to the Olympics, what would it be and how would it be judged?
+- [ ] What do most people assume about you that is not true?
+- [ ] What new technology do you think we will make — and not make — in the next 50 years?
+- [ ] What are some common assumptions about the world that you think are harmful?
+- [ ] Are some religions worse than others?
+- [ ] You (and only you!) learn that a zombie apocalypse will start in 24 hours. You have $10k in your bank account. What do you do before the apocalypse begins?
+- [ ] If you could create a new required high school class for students, what would it be and why?
+- [ ] Are there any societal norms that have fallen out of fashion that you think we should bring back?

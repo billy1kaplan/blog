@@ -1,5 +1,5 @@
 ---
-title: The Agentic Moment
+title: "Chat Was the UI. Agents are the Architecture."
 description: Agents crossed a reliability threshold — and the shape of software is changing
 pubDate: Feb 1 2026
 ---
